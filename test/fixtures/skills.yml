@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: 
+  assignee_id: 
+  assignee_name: 
+  user: one
+
+two:
+  name: 
+  assignee_id: 
+  assignee_name: 
+  user: two
