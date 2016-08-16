@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   root to: 'static#index'
 
-  resources :users do
-    resources :skills
+  namespace :api do
+    resources :users do
+      resources :skills
+    end
   end
 end
