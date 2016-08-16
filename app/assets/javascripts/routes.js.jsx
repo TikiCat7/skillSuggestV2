@@ -4,6 +4,7 @@ this.MyRoutes = (
   <Route handler={App}>
     <DefaultRoute handler={HelloWorld} />
     <Route name='signup ' handler={SignUpForm} path='/signup' />
-    <Route name='users' handler={User} path='/user' />
+    <Route name='users' handler={Users} path='/users' />
+    <Route name='userDetail' handler={UserDetail} path='/user/:userId' />
   </Route>
 );

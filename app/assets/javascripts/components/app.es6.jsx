@@ -1,4 +1,4 @@
-var RouteHandler = ReactRouter.RouteHandler,
+const RouteHandler = ReactRouter.RouteHandler,
     Link = ReactRouter.Link;
 
 class App extends React.Component {
@@ -6,7 +6,8 @@ class App extends React.Component {
     return (
     <div>
       <ul>
-        <li><Link to='/user' url={{url:'/api/users'}}>User</Link></li>
+        <li><Link to='/' >Home</Link></li>
+        <li><Link to='/users' >All Users</Link></li>
         <li><Link to='/signup'>SignUp</Link></li>
       </ul>
       <RouteHandler {...this.props}/>

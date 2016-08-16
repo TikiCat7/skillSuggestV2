@@ -1,7 +1,7 @@
 class HelloWorld extends React.Component {
   render(){
     return(
-      <div>Hello World</div>
+      <div>Welcome to this app!</div>
     )
   }
 }
