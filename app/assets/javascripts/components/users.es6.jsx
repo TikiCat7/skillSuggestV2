@@ -1,4 +1,7 @@
-class User extends React.Component {
+const RouteHandler = ReactRouter.RouteHandler,
+    Link = ReactRouter.Link;
+
+class Users extends React.Component {
 
   constructor(props){
     super(props)
@@ -28,13 +31,9 @@ class User extends React.Component {
 
       return(
             <ul key={user.id}>
-              <h1> User id: {user.id}</h1>
-              <h2> Basic User Info </h2>
-              <li>age: {user.age}</li>
-              <li>name: {user.name}</li>
-              <li>job: {user.job}</li>
-              <h2> User Skill Info</h2>
-              {Skills}
+              <h2> User id: {user.id}</h2>
+              <h2> User name: {user.name}</h2>
+              <li><Link to='userDetail' params={{userId:user.id}}>Go to {user.name} details</Link></li>
         </ul>
 
       )
