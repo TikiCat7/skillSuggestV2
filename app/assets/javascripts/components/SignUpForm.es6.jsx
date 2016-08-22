@@ -27,13 +27,12 @@ class SignUpForm extends React.Component {
         console.log('Something went wrong with creating a user: ')
         console.log(object.messages)
         this.setState({errorMessage:object.messages})
-
       })
       } else if (response.status === 200) {
+          this.setState({errorMessage:[]})
           response.json().then(object => {
           console.log('User successfully created!')
           console.log(object)
-
         })
       }
     })
@@ -49,7 +48,9 @@ class SignUpForm extends React.Component {
 
     return(
       <div>
-        {errorMessage}
+        <div>
+          {errorMessage}
+        </div>
         <form role='form' acceptCharset="UTF-8" action='/api/users' method='post' className="new_user" id="new_user" onSubmit={this.handleSubmit.bind(this)}>
           <input name="utf8" type="hidden" value="&#x2713;" />
           <input type='hidden' name='authenticity_token' value={this.props.authenticity_token} />
