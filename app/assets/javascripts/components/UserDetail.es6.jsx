@@ -35,8 +35,8 @@ class UserDetail extends React.Component {
       let result = {skillName:uniqueSkill, voteCount:count,voters:voters}
       return result
     })
-    
-    skills2 = finalSkills.map( skill => {
+
+    const skills2 = finalSkills.map( skill => {
       const allVoters = skill.voters.map( voter => {
         return(
             <li id={voter.id}>Voter: {voter.name}</li>
