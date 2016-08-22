@@ -33,6 +33,7 @@ class SignUpForm extends React.Component {
           response.json().then(object => {
           console.log('User successfully created!')
           console.log(object)
+          location.href = `/#/user/${object.id}`
         })
       }
     })
