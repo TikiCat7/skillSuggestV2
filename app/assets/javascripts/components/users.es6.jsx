@@ -34,7 +34,7 @@ class Users extends React.Component {
               <h2> User id: {user.id}</h2>
               <h2> User name: {user.name}</h2>
               <li><Link to='userDetail' params={{userId:user.id}}>Go to {user.name} details</Link></li>
-        </ul>
+            </ul>
 
       )
     })
