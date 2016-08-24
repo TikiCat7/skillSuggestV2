@@ -14,10 +14,11 @@ class LogInForm extends React.Component {
     }
   axios.post('/login',body)
     .then(function (response) {
-      console.log(response);
+      console.log(response)
+      location.href = `/#/user/${response.data.id}`
     })
     .catch(function (error) {
-      console.log(error);
+      console.log(error)
     });
   }
 
