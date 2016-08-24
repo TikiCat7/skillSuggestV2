@@ -1,6 +1,21 @@
 class LogInForm extends React.Component {
   constructor() {
     super()
+    this.state = {
+      formName:'',
+      formPass:''
+    }
+    this.handleLogin = this.handleLogin.bind(this)
+    this.handleNameChange = this.handleNameChange.bind(this)
+    this.handlePassChange = this.handlePassChange.bind(this)
+  }
+
+  handleNameChange(event) {
+    event.preventDefault()
+  }
+
+  handlePassChange(event) {
+    event.preventDefault()
   }
 
   handleLogin(event) {
@@ -12,19 +27,24 @@ class LogInForm extends React.Component {
       name:name,  //axiosで送る時はjsonだから session[name] じゃなくて name
       password:password
     }
-  axios.post('/login',body)
-    .then(function (response) {
-      console.log(response)
+    axios.post('/login',body)
+      .then( response => {
+        console.log(response)
+        const user = {
+          name:response.data.name,
+          id:response.data.id
+        }
+      this.props.handleUserUpdate(user)
       location.href = `/#/user/${response.data.id}`
     })
-    .catch(function (error) {
+    .catch(error => {
       console.log(error)
-    });
+    })
   }
 
   render(){
     return(
-      <form acceptCharset="UTF-8" onSubmit={this.handleLogin.bind(this)}>
+      <form acceptCharset="UTF-8" onSubmit={this.handleLogin}>
         <input name="utf8" type="hidden" value="&#x2713;" />
         <input name="authenticity_token" type="hidden" value={this.props.authenticity_token} />
         <label htmlFor="session_name">Name</label>
