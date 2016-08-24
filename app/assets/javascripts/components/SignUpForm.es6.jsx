@@ -80,7 +80,3 @@ class SignUpForm extends React.Component {
     )
   }
 }
-//
-// SignUpForm.contextTypes = {
-//   router: React.PropTypes.func
-// };
