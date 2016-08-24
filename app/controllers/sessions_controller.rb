@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
     user = User.find_by(name: params[:session][:name])
     if user && user.authenticate(params[:session][:password])
       log_in user
-      render json: {message:'login successful!', id:user.id}, status: 200
+      render json: {message:'login successful!', id:user.id, name:user.name}, status: 200
     else
       render json: 'Failed to authenticate username or password', status: 403
     end
