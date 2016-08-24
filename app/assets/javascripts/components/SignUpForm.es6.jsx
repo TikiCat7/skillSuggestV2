@@ -40,7 +40,6 @@ class SignUpForm extends React.Component {
   }
 
   render() {
-
     const errorMessage = this.state.errorMessage.map((error,index) => {
           return (
             <li key={index}>{error}</li>
@@ -81,3 +80,7 @@ class SignUpForm extends React.Component {
     )
   }
 }
+//
+// SignUpForm.contextTypes = {
+//   router: React.PropTypes.func
+// };
