@@ -16,6 +16,7 @@ class Api::UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
+      log_in @user
       render json: @user, status: 200
     else
       render json: { messages: @user.errors.full_messages }, status: 400
