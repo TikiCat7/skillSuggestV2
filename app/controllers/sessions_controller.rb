@@ -1,18 +1,38 @@
 class SessionsController < ApplicationController
 
-  def new
-  end
-
-  def create
+  def login
     user = User.find_by(name: params[:session][:name])
     if user && user.authenticate(params[:session][:password])
-      log_in user
-      render json: {message:'login successful!', id:user.id, name:user.name}, status: 200
+      #log_in user
+      createToken user
+      #JsonWebToken.encode(params[:session][:name])
+      render json: {message:'login successful!', id:user.id, name:user.name, token:session[:token]}, status: 200
     else
-      render json: 'Failed to authenticate username or password', status: 403
+      render json: 'Failed to authenticate username or password', status: 422
     end
   end
 
-  def destroy
+  def checkAuth
+    if request.headers['Authorization'].present? #check if request has Authorization header
+        @http_token ||= request.headers['Authorization'].split(' ').last #if it does store in variable
+    else
+        render json: {redirectToLogIn:true, message:'not authorized (no authorization header)'} #if it doesnt, they need to login
+        return
+    end
+
+    if JsonWebToken.decode(@http_token) == nil
+      render json: {redirectToLogIn:true, message:'not authorized (jwt failed to decode)'}
+      return
+    else
+      @auth_token ||= JsonWebToken.decode(@http_token)
+    end
+
+    def user_id_in_token?
+      @http_token && @auth_token && @auth_token[:id].to_i
+    end
+
+    #if you get to here good job you passed!
+    return @auth_token
+    #render json: {decodedToken:@auth_token, httpToken: @http_token, message: 'hi', userIdInToken?:user_id_in_token?}
   end
 end

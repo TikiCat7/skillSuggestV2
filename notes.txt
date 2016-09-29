@@ -1,0 +1,85 @@
+Adding Authentication
+
+Step 1. Adding a secure password to User model
+- adds the ability to add hashed password as password_digest attribute to the model
+- adds authenticate method to check password
+- adds pair of virtual attributes (password and password_confirmation)
+
+$ rails generate migration add_password_digest_to_users password_digest:string
+$ rails db:migrate
+
+add bcrypt gem for secure hashing of password
+
+#Gemfile
+gem 'bcrypt',         '3.1.11'
+$ bundle install
+
+Step 2. Add has_secure_password to User model
+
+#app/models/user.rb
+
+has_secure_password
+validates :password, presence: true, length: { minimum: 6 }
+
+Step 3. Try making a user from rails console
+
+$ rails console
+>> User.create(name: "Michael Hartl", email: "mhartl@example.com",
+?>             password: "foobar", password_confirmation: "foobar")
+=> #<User id: 1, name: "Michael Hartl", email: "mhartl@example.com",
+created_at: "2016-05-23 20:36:46", updated_at: "2016-05-23 20:36:46",
+password_digest: "$2a$10$xxucoRlMp06RLJSfWpZ8hO8Dt9AZXlGRi3usP3njQg3...">
+
+check SQlite to see password digest attribute is hashed
+
+test the authenticate works by doing
+
+>> user.authenticate("not_the_right_password")
+false
+>> user.authenticate("foobaz")
+false
+
+-------------------------------------------------------------------------------
+
+Creating a sign up form
+
+create html form inside react component (can't use the short hand ERB style if we want to separate into react)
+
+something like this...
+
+<form accept-charset="UTF-8" action="/users" class="new_user"
+      id="new_user" method="post">
+  <input name="utf8" type="hidden" value="&#x2713;" />
+  <input name="authenticity_token" type="hidden"
+         value="NNb6+J/j46LcrgYUC60wQ2titMuJQ5lLqyAbnbAUkdo=" />
+  <label for="user_name">Name</label>
+  <input id="user_name" name="user[name]" type="text" />
+
+  <label for="user_email">Email</label>
+  <input id="user_email" name="user[email]" type="email" />
+
+  <label for="user_password">Password</label>
+  <input id="user_password" name="user[password]"
+         type="password" />
+
+  <label for="user_password_confirmation">Confirmation</label>
+  <input id="user_password_confirmation"
+         name="user[password_confirmation]" type="password" />
+
+  <input class="btn btn-primary" name="commit" type="submit"
+         value="Create my account" />
+</form>
+
+1. <form action="/users" method="post">
+calls the user controller #create -> this takes user_params (which requires user attributes: name, job, age, password, password_confirmation)
+
+2.<label for="user_name">Name</label>
+<input id="user_name" name="user[name]" type="text" />
+
+Using strong parameters to check submitted user attributes
+
+private
+
+    def user_params
+      params.require(:user).permit(:name, :email, :password,
+                                   :password_confirmation)

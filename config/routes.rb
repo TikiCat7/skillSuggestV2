@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   root to: 'static#index'
-  get    '/login',   to: 'sessions#new'
-  post   '/login',   to: 'sessions#create'
-  delete '/logout',  to: 'sessions#destroy'
+  post   '/login',   to: 'sessions#login'
+  post   '/checkAuth', to: 'sessions#checkAuth'
+  get '/protected', to: 'protected#index'
 
   namespace :api do
     resources :users do
