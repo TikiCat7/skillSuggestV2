@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   post   '/login',   to: 'sessions#login'
   post   '/checkAuth', to: 'sessions#checkAuth'
   get '/protected', to: 'protected#index'
+  post '/protectedforuser', to: 'protecteduser#index'
 
   namespace :api do
     resources :users do
