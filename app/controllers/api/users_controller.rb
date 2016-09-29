@@ -16,10 +16,11 @@ class Api::UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      log_in @user
-      render json: @user, status: 200
+      #log_in @user
+      createToken @user
+      render json: {message:'signup successful!', id:@user.id, name:@user.name, token:session[:token]}, status: 200
     else
-      render json: { messages: @user.errors.full_messages }, status: 400
+      render json: { messages: @user.errors.full_messages }, status: 422
     end
   end
 
