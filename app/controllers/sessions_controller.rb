@@ -28,7 +28,7 @@ class SessionsController < ApplicationController
     end
 
     def user_id_in_token?
-      @http_token && @auth_token && @auth_token[:id].to_i
+      @http_token && @auth_token && @auth_token[:data][:id].to_i
     end
 
     #if you get to here good job you passed!
@@ -53,7 +53,7 @@ def checkAuthForSpecificUser #checking jwt & making sure they are a specific use
   end
 
   # check if sent name matches jwt decoded name, if so we allow user to do something to that user object
-  if params[:name] != @auth_token[:name]
+  if params[:name] != @auth_token[:data][:name]
     render json: {redirectToLogIn:false, message: 'not authorized (you dont have permission touch that)'}
     return
   end
@@ -75,12 +75,12 @@ def checkAuthForSkillCreate #checking jwt & making sure they are a specific user
   end
 
   def user_id_in_token?
-    @http_token && @auth_token && @auth_token[:id].to_i
+    @http_token && @auth_token && @auth_token[:data][:id].to_i
   end
 
   # check if sent name matches jwt decoded name, if so we allow user to do something to that user object
-  if params[:assignee_id].to_i != @auth_token[:id] || params[:assignee_name] != @auth_token[:name]
-    render json: {redirectToLogIn:false, message: 'not authorized (you dont have permission touch that)', assigneeid: params[:assignee_id].to_i, id: @auth_token[:id], AuthToken: @http_token, deocdedJwt: @auth_token}
+  if params[:assignee_id].to_i != @auth_token[:data][:id] || params[:assignee_name] != @auth_token[:data][:name]
+    render json: {redirectToLogIn:false, message: 'not authorized (you dont have permission touch that)', assigneeid: params[:assignee_id].to_i, id: @auth_token[:data][:id], AuthToken: @http_token, deocdedJwt: @auth_token}
     return
   end
 end
