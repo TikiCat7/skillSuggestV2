@@ -24,6 +24,7 @@ gem 'rails-assets-axios', source: 'https://rails-assets.org'
 gem 'devise'
 gem 'jwt'
 gem 'rack-cors'
+gem "bullet", :group => "development"
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
