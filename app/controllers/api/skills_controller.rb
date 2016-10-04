@@ -1,6 +1,6 @@
-class Api::SkillsController < ApplicationController
+class Api::SkillsController < SessionsController
   before_action :set_skill, only: [:show, :update, :destroy]
-
+  before_action :checkAuthForSkillCreate, only: [:create, :destroy, :update]
   # GET /skills
   def index
     @skills = Skill.where(user_id:params[:user_id])

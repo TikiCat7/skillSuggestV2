@@ -58,3 +58,29 @@ def checkAuthForSpecificUser #checking jwt & making sure they are a specific use
     return
   end
 end
+
+def checkAuthForSkillCreate #checking jwt & making sure they are a specific user
+  if request.headers['Authorization'].present? #check if request has Authorization header
+      @http_token ||= request.headers['Authorization'].split(' ').last #if it does store in variable
+  else
+      render json: {redirectToLogIn:true, message:'not authorized (no authorization header)'} #if it doesnt, they need to login
+      return
+  end
+
+  if JsonWebToken.decode(@http_token) == nil
+    render json: {redirectToLogIn:true, message:'not authorized (jwt failed to decode)'}
+    return
+  else
+    @auth_token ||= JsonWebToken.decode(@http_token)
+  end
+
+  def user_id_in_token?
+    @http_token && @auth_token && @auth_token[:id].to_i
+  end
+
+  # check if sent name matches jwt decoded name, if so we allow user to do something to that user object
+  if params[:assignee_id].to_i != @auth_token[:id]
+    render json: {redirectToLogIn:false, message: 'not authorized (you dont have permission touch that)', assigneeid: params[:assignee_id].to_i, id: @auth_token[:id], AuthToken: @http_token, deocdedJwt: @auth_token}
+    return
+  end
+end
