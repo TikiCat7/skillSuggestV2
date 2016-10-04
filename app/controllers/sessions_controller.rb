@@ -79,7 +79,7 @@ def checkAuthForSkillCreate #checking jwt & making sure they are a specific user
   end
 
   # check if sent name matches jwt decoded name, if so we allow user to do something to that user object
-  if params[:assignee_id].to_i != @auth_token[:id]
+  if params[:assignee_id].to_i != @auth_token[:id] || params[:assignee_name] != @auth_token[:name]
     render json: {redirectToLogIn:false, message: 'not authorized (you dont have permission touch that)', assigneeid: params[:assignee_id].to_i, id: @auth_token[:id], AuthToken: @http_token, deocdedJwt: @auth_token}
     return
   end
