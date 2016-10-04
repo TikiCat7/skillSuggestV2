@@ -23,6 +23,7 @@ gem 'bcrypt', '3.1.11'
 gem 'rails-assets-axios', source: 'https://rails-assets.org'
 gem 'devise'
 gem 'jwt'
+gem 'rack-cors'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
