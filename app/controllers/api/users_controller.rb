@@ -2,7 +2,7 @@ class Api::UsersController < ApplicationController
   before_action :set_user, only: [:show, :update, :destroy]
 
   def index
-    @users = User.includes(:skills).all
+    @users = User.includes(:skills).all #to fix n+1 query problem
 
     render json: @users
   end
@@ -27,7 +27,7 @@ class Api::UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = User.includes(:skills).find(params[:id])
+      @user = User.includes(:skills).find(params[:id]) #to fix n+1 query problem
     end
 
     # Only allow a trusted parameter "white list" through.
