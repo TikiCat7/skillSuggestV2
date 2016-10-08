@@ -212,7 +212,6 @@ DEPENDENCIES
   rails (~> 5.0.0, >= 5.0.0.1)
   rails-assets-axios!
   react-rails
-  6952aeaffd2928
   sass-rails (~> 5.0)
   spring
   spring-watcher-listen (~> 2.0.0)
