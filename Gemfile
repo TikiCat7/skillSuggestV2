@@ -16,7 +16,7 @@ gem 'coffee-rails', '~> 4.2'
 # gem 'therubyracer', platforms: :ruby
 
 gem 'react-rails'
-gem 'react-router-rails', '~>0.13.3.2'
+# gem 'react-router-rails', '~>0.13.3.2'
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'bcrypt', '3.1.11'
 gem 'rails-assets-axios', source: 'https://rails-assets.org'
