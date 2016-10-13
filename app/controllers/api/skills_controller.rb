@@ -36,13 +36,23 @@ class Api::SkillsController < SessionsController
 
   # DELETE /skills/1
   def destroy
-    @skill.destroy
+    #you can delete all skills assigned to YOU (you or by others), and also skills YOU assigned to others
+    if User.find(params[:assignee_id]).id == @skill.assignee_id || !Skill.where(user_id:params[:user_id]).where(id:params[:id]).where(assignee_id:params[:assignee_id]).blank? || !Skill.where(user_id:params[:assignee_id]).where(id:params[:id]).blank?
+      @skill.destroy
+      render json: {result: 'deleted skill successfully'}
+    else
+      render json: {result: 'couldnt delete skills'}
+    end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_skill
-      @skill = Skill.find(params[:id])
+      if Skill.where(id:params[:id]).blank?
+        render json: {result: 'couldnt process delete request'} #dont give extra failure info security-wise
+      else
+        @skill = Skill.find(params[:id])
+      end
     end
 
     # Only allow a trusted parameter "white list" through.
