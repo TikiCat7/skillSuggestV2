@@ -5,7 +5,10 @@ Rails.application.routes.draw do
   get '/protected', to: 'protected#index'
   post '/protectedforuser', to: 'protecteduser#index'
 
+
+
   namespace :api do
+    resources :skills
     resources :users do
       resources :skills
     end

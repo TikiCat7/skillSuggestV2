@@ -1,17 +1,37 @@
 class Api::SkillsController < SessionsController
-  before_action :set_skill, only: [:show, :update, :destroy]
+  before_action :delete_check, only: [:destroy]
   before_action :checkAuthForSkillCreate, only: [:create, :destroy, :update]
   # GET /skills
+  # if user goes to api/skills > id provied = specific id skill, user_id provided = a users skill returned, name provided = all skills with provided name returned
   def index
-    @skills = Skill.where(user_id:params[:user_id])
-    render json: @skills
+    if params[:id]
+      @skills = Skill.where(id:params[:id])
+    elsif params[:user_id]
+      @skills = Skill.where(user_id:params[:user_id])
+    elsif params[:name]
+      @skills = Skill.where(name:params[:name])
+    else
+      @skills = Skill.all()
+    end
+      render json: @skills
   end
 
   # GET /skills/1
+  # works when its nested for a user and when its just for specificsk
   def show
-    @user = User.find(params[:user_id])
-    @skill = @user.skills.find(params[:id])
-    render json: @skill
+    if params[:user_id]
+      @user = User.find(params[:user_id])
+      @skill = @user.skills.where(id:params[:id])
+      render json: @skill
+    elsif params[:id]
+      @skill = Skill.where(id:params[:id])
+      render json: @skill
+    elsif params[:name]
+      @skill = Skill.where(name:params[:name])
+      render json: @skill
+    else
+      render json: {result:'nothing found'}
+    end
   end
 
   # POST /skills
@@ -47,7 +67,7 @@ class Api::SkillsController < SessionsController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_skill
+    def delete_check
       if Skill.where(id:params[:id]).blank?
         render json: {result: 'couldnt process delete request'} #dont give extra failure info security-wise
       else
