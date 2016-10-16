@@ -24,6 +24,13 @@ class Api::UsersController < ApplicationController
     end
   end
 
+  # DELETE /users/1
+  def destroy
+    #you can delete all skills assigned to YOU (you or by others), and also skills YOU assigned to others
+      @user.destroy
+      render json: {result: 'deleted user successfully'}
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
