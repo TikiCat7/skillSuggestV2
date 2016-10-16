@@ -11,7 +11,7 @@ class Api::SkillsController < SessionsController
     elsif params[:name]
       @skills = Skill.where(name:params[:name])
     else
-      @skills = Skill.all()
+      @skills = Skill.includes(:user).all() #fix n+1 query
     end
       render json: @skills
   end
